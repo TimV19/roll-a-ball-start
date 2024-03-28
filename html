@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rollende Bal Spel</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+    }
+
+    .game-container {
+      position: relative;
+      width: 400px;
+      height: 300px;
+      background-color: black;
+    }
+
+    .player,
+    .target,
+    .obstacle {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+    }
+
+    .player {
+      background-color: red;
+    }
+
+    .target {
+      background-color: green;
+      top: 0;
+      left: 175px;
+    }
+
+    .obstacle {
+      background-color: red;
+      top: 150px;
+      left: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="player"></div>
+    <div class="target"></div>
+    <div class="obstacle"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const player = document.querySelector('.player');
+      const target = document.querySelector('.target');
+      const obstacle = document.querySelector('.obstacle');
+
+      const playerSize = 50;
+      const obstacleSize = 100;
+
+      // Initial positions
+      let playerX = 175;
+      let playerY = 250;
+
+      player.style.top = playerY + 'px';
+      player.style.left = playerX + 'px';
+
+      const targetX = 175;
+      const targetY = 0;
+
+      const obstacleX = 100;
+      const obstacleY = 150;
+
+      document.addEventListener('keydown', function (event) {
+        const speed = 5;
+        switch (event.key) {
+          case 'ArrowLeft':
+            if (playerX > 0) {
+              playerX -= speed;
+              player.style.left = playerX + 'px';
+            }
+            break;
+          case 'ArrowRight':
+            if (playerX < 350) {
+              playerX += speed;
+              player.style.left = playerX + 'px';
+            }
+            break;
+          case 'ArrowUp':
+            if (playerY > 0) {
+              playerY -= speed;
+              player.style.top = playerY + 'px';
+            }
+            break;
+          case 'ArrowDown':
+            if (playerY < 250) {
+              playerY += speed;
+              player.style.top = playerY + 'px';
+            }
+            break;
+        }
+
+        // Check for collision with target
+        if (playerX < targetX + 50 && playerX + playerSize > targetX &&
+          playerY < targetY + 50 && playerY + playerSize > targetY) {
+          alert("Je hebt gewonnen!");
+        }
+
+        // Check for collision with obstacle
+        if (playerX < obstacleX + obstacleSize && playerX + playerSize > obstacleX &&
+          playerY < obstacleY + obstacleSize && playerY + playerSize > obstacleY) {
+          alert("Game Over!");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
